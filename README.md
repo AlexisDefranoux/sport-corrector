@@ -24,7 +24,7 @@ dessin
 
 ## Mockup GUI
 
-dessin balsamiq
+dessin balsamiq (s'en fou du design, surtout intercation user)
 
 ## Compatibilité des téléphones
 
