@@ -1,30 +1,10 @@
 # Sport Corrector
 
-A mobile application to correct your sport gestures.
+Une application mobile permettant de corriger et améliorer en direct les gestes de mes activités sportives.
 
-## Team
+## Pages wiki
 
-- François Nespoulous
-- Alexis Defranoux
-
-## Scénarios
-
-### Scénario 1
-
-Jean-Luc souhaite se mettre au sport. Il a conscience qu'il ne connaît pas les mouvements, et donc risque de se blesser.
-Grâce à notre application mobile ***Sport Corrector***, Jean-Luc va pouvoir faire un squat, et l'application va lui indiquer s'il le réalise bien, ou encore les problèmes dans son geste.
-
-### Scénario 2
-
-Jean-Bourrin est un habitué des squats. Pour prouver à son chat qu'il a raison, il décide d'utiliser ***Sport Corrector*** pour confirmer son geste. L'application vérifie le geste à l'aide d'un algorithme de machine learning, et indique si il y a des choses a améliorer.
-
-## Architecture logicielle
-
-dessin
-
-## Mockup GUI
-
-dessin balsamiq (s'en fou du design, surtout intercation user)
+Nous vous invitons à visiter le [wiki du projet](https://github.com/AlexisDefranoux/sport-corrector/wiki/1.-Introduction) pour plus de détails.
 
 ## Compatibilité des téléphones
 
@@ -36,7 +16,7 @@ dessin balsamiq (s'en fou du design, surtout intercation user)
 | iPhone 6S |  iOS 12.4.1 |   :x:   |
 
 
-## Capteurs
+## Capteurs utilisés
 
 Les capteurs du téléphone utilisé dans ce projet sont :
 - Accélération linéaire
@@ -44,24 +24,8 @@ Les capteurs du téléphone utilisé dans ce projet sont :
 - Accéléromètre
 - Rotation vectorielle
 
-## Sprints
 
-- [Sprint #1 : Mise en place du projet](https://github.com/AlexisDefranoux/sport-corrector/milestone/1)
-- [Sprint #2 : Incrémentation](https://github.com/AlexisDefranoux/sport-corrector/milestone/2)
-- [Sprint #3 : Expérimentation](https://github.com/AlexisDefranoux/sport-corrector/milestone/3)
+----
 
-## Choix des technlogies
-
-Android studio et flutter (Android c'est mieux)
-
-choix dev / techno (qui convient crossplateforme)
-- pk ihm web ?
-- pk capteurs ?
-
-### Pour l'IHM
-### Pour les capteurs
-
-## Cours
-
-Polytech Nice Sophia - Environnements Logiciels pour l'Informatique Mobile
+*Polytech Nice Sophia - Environnements Logiciels pour l'Informatique Mobile*
 
