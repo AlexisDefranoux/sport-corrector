@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:sport_corrector/exercice_menu.dart';
 
 void main() => runApp(MyApp());
 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Sport Corrector',
+      theme: new ThemeData(primarySwatch: Colors.teal),
+      home: new ExerciseMenu(),
+    );
+  }
+}
+/*
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Sport Corrector',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -98,6 +111,9 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
+            Text(
+              'oui'
+            ),
           ],
         ),
       ),
@@ -109,3 +125,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
