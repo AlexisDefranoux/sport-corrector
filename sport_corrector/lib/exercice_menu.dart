@@ -20,10 +20,10 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("BONJOUR"),
+          title: Text("Sport Corrector"),
           bottom: TabBar(
             controller: _tabController,
-            tabs: [Tab(text: "titre1"), Tab(text: "titre2")],
+            tabs: [Tab(text: "Capteurs"), Tab(text: "Exercice")],
           )
       ),
       body: TabBarView(
