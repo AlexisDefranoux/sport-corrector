@@ -4,26 +4,42 @@ import 'package:sport_corrector/model/captor_class.dart';
 
 class Movement {
 
-  HashMap<int, Captor> captorByTime;
+  List<Captor> captorByTime;
 
   Movement() {
-    captorByTime = new HashMap<int, Captor>();
+    captorByTime = new List<Captor>();
   }
 
-  addCaptor(int time, Captor captor) {
-    captorByTime [time] = captor;
+  void addCaptor(Captor captor) {
+    captorByTime.add(captor);
+  }
+
+  List<double> getList(){
+    List<double> data = new List<double>();
+    captorByTime.forEach((v) {
+      v.accelerometer.forEach((s) {
+        data.add(double.parse(s));
+      });
+      v.accelerometerUser.forEach((s) {
+        data.add(double.parse(s));
+      });
+      v.gyroscope.forEach((s) {
+        data.add(double.parse(s));
+      });
+    });
+    print(data);
+    return data;
   }
 
   String toString() {
     String data = "";
-    captorByTime.forEach((k, v) {
-      if(k == 1){
+    captorByTime.forEach((v) {
+      if(data == ""){
         data += v.toString();
       }else{
         data += "," + v.toString();
       }
     });
-    print(data);
     return data;
   }
 }

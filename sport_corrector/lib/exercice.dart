@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
+import 'package:sklite/SVM/SVM.dart';
+import 'package:sklite/utils/io.dart';
 import 'package:sport_corrector/model/captor_class.dart';
 import 'package:sport_corrector/model/movement_class.dart';
 
@@ -18,8 +21,10 @@ class _ExerciseState extends State<Exercise> {
   List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
-  Movement movement = new Movement();
+  List<Movement> movements = new List<Movement>();
   Timer timer;
+  SVC svc;
+  String result = "";
 
   @override
   void initState() {
@@ -49,6 +54,13 @@ class _ExerciseState extends State<Exercise> {
     }));
   }
 
+  void predict(){
+    loadModel("assets/MachineLearning/data.json").then((x) {
+      this.svc = SVC.fromMap(json.decode(x));
+      result = this.svc.predict(movements[movements.length - 1].getList()).toString();
+    });
+  }
+
   @override
   void dispose() {
     for (StreamSubscription<dynamic> sub in _streamSubscriptions) {
@@ -59,10 +71,12 @@ class _ExerciseState extends State<Exercise> {
   }
 
   void oneMovement(accelerometer, gyroscope, userAccelerometer) {
+    Movement movement = new Movement();
+    movements.add(movement);
     timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
-      movement.addCaptor(t.tick, new Captor(accelerometer, gyroscope, userAccelerometer));
+      movement.addCaptor(new Captor(accelerometer, gyroscope, userAccelerometer));
       print(t.tick);
-      if(t.tick >= 50){
+      if(t.tick >= 20){
         timer?.cancel();
       }
     });
@@ -119,12 +133,18 @@ class _ExerciseState extends State<Exercise> {
                 color: Color(AppColors.buttonColor),
                 onPressed: () {
                   print("afficher");
-                  print(movement.captorByTime.length);
-                  movement.toString();
+                  for(Movement movement in movements){
+                    print(movement.toString() + "\n");
+                  }
+                  predict();
                 },
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Résultat : ' + result),
             ),
           ],
         ),

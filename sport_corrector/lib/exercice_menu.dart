@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sport_corrector/SensorsExample.dart';
 import 'package:sport_corrector/exercice.dart';
 
+import 'MachineLearning.dart';
+
 class ExerciseMenu extends StatefulWidget {
   @override
   _ExerciseMenuState createState() => _ExerciseMenuState();
@@ -13,7 +15,7 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -23,7 +25,7 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
           title: Text("Sport Corrector"),
           bottom: TabBar(
             controller: _tabController,
-            tabs: [Tab(text: "Capteurs"), Tab(text: "Exercice")],
+            tabs: [Tab(text: "Capteurs"), Tab(text: "Exercice"), Tab(text: "ML",)],
           )
       ),
       body: TabBarView(
@@ -37,7 +39,8 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
   List<Widget> _just() {
     return [
       SensorsExample(),
-      Exercise()
+      Exercise(),
+      HomePage()
     ];
   }
 }
