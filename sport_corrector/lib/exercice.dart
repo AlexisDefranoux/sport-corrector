@@ -19,6 +19,7 @@ class _ExerciseState extends State<Exercise> {
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
   Movement movement = new Movement();
+  Timer timer;
 
   @override
   void initState() {
@@ -53,7 +54,18 @@ class _ExerciseState extends State<Exercise> {
     for (StreamSubscription<dynamic> sub in _streamSubscriptions) {
       sub.cancel();
     }
+    timer?.cancel();
     super.dispose();
+  }
+
+  void oneMovement(accelerometer, gyroscope, userAccelerometer) {
+    timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
+      movement.addCaptor(t.tick, new Captor(accelerometer, gyroscope, userAccelerometer));
+      print(t.tick);
+      if(t.tick >= 50){
+        timer?.cancel();
+      }
+    });
   }
 
   @override
@@ -86,7 +98,7 @@ class _ExerciseState extends State<Exercise> {
                   color: Color(AppColors.buttonColor),
                   onPressed: () {
                     print("lancer");
-                    movement.addCaptor(0, new Captor(accelerometer, gyroscope, userAccelerometer));
+                    oneMovement(accelerometer, gyroscope, userAccelerometer);
                   },
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
@@ -107,7 +119,8 @@ class _ExerciseState extends State<Exercise> {
                 color: Color(AppColors.buttonColor),
                 onPressed: () {
                   print("afficher");
-                  movement.printMovement();
+                  print(movement.captorByTime.length);
+                  movement.toString();
                 },
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)),

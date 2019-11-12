@@ -4,24 +4,26 @@ import 'package:sport_corrector/model/captor_class.dart';
 
 class Movement {
 
-  HashMap<double, Captor> captorByTime;
+  HashMap<int, Captor> captorByTime;
 
   Movement() {
-    captorByTime = new HashMap<double, Captor>();
+    captorByTime = new HashMap<int, Captor>();
   }
 
-  addCaptor(double time, Captor captor) {
+  addCaptor(int time, Captor captor) {
     captorByTime [time] = captor;
   }
 
-  printMovement() {
-    print(captorByTime);
+  String toString() {
+    String data = "";
     captorByTime.forEach((k, v) {
-      if(k == 0){
-        print(v.toString());
+      if(k == 1){
+        data += v.toString();
       }else{
-        print("," + v.toString());
+        data += "," + v.toString();
       }
     });
+    print(data);
+    return data;
   }
 }
