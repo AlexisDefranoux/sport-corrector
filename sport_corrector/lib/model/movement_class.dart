@@ -1,17 +1,17 @@
-import 'dart:collection';
-
 import 'package:sport_corrector/model/captor_class.dart';
 
 class Movement {
 
   List<Captor> captorByTime;
+  int mlClass;
 
   Movement() {
     captorByTime = new List<Captor>();
   }
 
-  void addCaptor(Captor captor) {
+  void addCaptor(Captor captor, int mlClass) {
     captorByTime.add(captor);
+    this.mlClass = mlClass;
   }
 
   List<double> getList(){
@@ -27,19 +27,15 @@ class Movement {
         data.add(double.parse(s));
       });
     });
-    print(data);
     return data;
   }
 
   String toString() {
     String data = "";
     captorByTime.forEach((v) {
-      if(data == ""){
-        data += v.toString();
-      }else{
-        data += "," + v.toString();
-      }
+        data +=v.toString()+", ";
     });
+    data+=mlClass.toString();
     return data;
   }
 }
