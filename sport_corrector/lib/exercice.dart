@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 import 'package:sklite/SVM/SVM.dart';
+import 'package:sklite/ensemble/forest.dart';
 import 'package:sklite/utils/io.dart';
 import 'package:sport_corrector/model/captor_class.dart';
 import 'package:sport_corrector/model/movement_class.dart';
@@ -24,6 +25,7 @@ class _ExerciseState extends State<Exercise> {
   List<Movement> movements = new List<Movement>();
   Timer timer;
   SVC svc;
+  RandomForestClassifier rfc;
   int result = 0;
   String dropdownValue = '0-bon';
   int mlClass = 0;
@@ -59,8 +61,8 @@ class _ExerciseState extends State<Exercise> {
 
   void predict(){
     loadModel("assets/MachineLearning/data.json").then((x) {
-      this.svc = SVC.fromMap(json.decode(x));
-      result = this.svc.predict(movements[movements.length - 1].getList());
+      this.rfc = RandomForestClassifier.fromMap(json.decode(x));
+      result = this.rfc.predict(movements[movements.length - 1].getList());
     });
   }
 
