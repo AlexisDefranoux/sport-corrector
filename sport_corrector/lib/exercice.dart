@@ -73,11 +73,15 @@ class _ExerciseState extends State<Exercise> {
     super.dispose();
   }
 
-  void oneMovement(accelerometer, gyroscope, userAccelerometer) {
+  void oneMovement() {
     Movement movement = new Movement();
     movements.add(movement);
     timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
-      movement.addCaptor(new Captor(accelerometer, gyroscope, userAccelerometer), mlClass);
+      movement.addCaptor(new Captor(
+          _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList(),
+          _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))?.toList(),
+          _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList()
+          ), mlClass);
       print(t.tick);
       if(t.tick >= 20){
         timer?.cancel();
@@ -87,14 +91,6 @@ class _ExerciseState extends State<Exercise> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> accelerometer =
-    _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList();
-    final List<String> gyroscope =
-    _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))?.toList();
-    final List<String> userAccelerometer = _userAccelerometerValues
-        ?.map((double v) => v.toStringAsFixed(1))
-        ?.toList();
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -146,7 +142,7 @@ class _ExerciseState extends State<Exercise> {
                   color: Color(AppColors.buttonColor),
                   onPressed: () {
                     print("lancer");
-                    oneMovement(accelerometer, gyroscope, userAccelerometer);
+                    oneMovement();
                   },
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
