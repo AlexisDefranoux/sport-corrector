@@ -26,7 +26,8 @@ class _ExerciseState extends State<Exercise> {
   Timer timer;
   SVC svc;
   RandomForestClassifier rfc;
-  int result = 0;
+  int resultRfc = 0;
+  int resultSvc = 0;
   String dropdownValue = '0-bon';
   int mlClass = 0;
   List<String> items = <String>['0-bon', '1-low speed', '2-high speed', '3-low amplitude', '4-high amplitude', '5-on the side', '6-immobile', '7-horizontal', '8-shake', '9-garbage'];
@@ -60,9 +61,15 @@ class _ExerciseState extends State<Exercise> {
   }
 
   void predict(){
-    loadModel("assets/MachineLearning/data.json").then((x) {
+    loadModel("assets/MachineLearning/data_rfc.json").then((x) {
       this.rfc = RandomForestClassifier.fromMap(json.decode(x));
-      result = this.rfc.predict(movements[movements.length - 1].getList());
+      resultRfc = this.rfc.predict(movements[movements.length - 1].getList());
+      print("RFC : " + items[resultRfc]);
+    });
+    loadModel("assets/MachineLearning/data_svc.json").then((x) {
+      this.svc = SVC.fromMap(json.decode(x));
+      resultSvc = this.svc.predict(movements[movements.length - 1].getList());
+      print("SVC : " + items[resultSvc]);
     });
   }
 
@@ -165,9 +172,11 @@ class _ExerciseState extends State<Exercise> {
                 color: Color(AppColors.buttonColor),
                 onPressed: () {
                   print("afficher");
+                  String result = "";
                   for(Movement movement in movements){
-                    print(movement.toString() + "\n");
+                    result += movement.toString() + "\n";
                   }
+                  print(result);
                   predict();
                 },
                 shape: new RoundedRectangleBorder(
@@ -176,7 +185,11 @@ class _ExerciseState extends State<Exercise> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Résultat : ' + items[result]),
+              child: Text('Résultat SVC : ' + items[resultSvc]),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Résultat RFC : ' + items[resultRfc]),
             ),
           ],
         ),
