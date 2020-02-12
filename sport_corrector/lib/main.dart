@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sport_corrector/exercice_menu.dart';
+import 'package:sport_corrector/widgets/HomePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,8 +9,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sport Corrector',
-      theme: new ThemeData(primarySwatch: Colors.teal),
-      home: new ExerciseMenu(),
+      home: new HomePage()
     );
   }
 }

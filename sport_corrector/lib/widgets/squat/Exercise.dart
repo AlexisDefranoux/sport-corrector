@@ -6,10 +6,10 @@ import 'package:sensors/sensors.dart';
 import 'package:sklite/SVM/SVM.dart';
 import 'package:sklite/ensemble/forest.dart';
 import 'package:sklite/utils/io.dart';
-import 'package:sport_corrector/model/captor_class.dart';
-import 'package:sport_corrector/model/movement_class.dart';
+import 'package:sport_corrector/model/CaptorClass.dart';
+import 'package:sport_corrector/model/MovementClass.dart';
 
-import 'color.dart';
+import '../../data/AppColors.dart';
 
 class Exercise extends StatefulWidget {
   @override
@@ -146,9 +146,9 @@ class _ExerciseState extends State<Exercise> {
                     "Lancer",
                     style: new TextStyle(
                         fontSize: 20.0,
-                        color: Color(AppColors.buttonTextColor)),
+                        color: AppColors.white),
                   ),
-                  color: Color(AppColors.buttonColor),
+                  color: AppColors.foreground,
                   onPressed: () {
                     print("lancer");
                     oneMovement();
@@ -166,10 +166,10 @@ class _ExerciseState extends State<Exercise> {
                   "Afficher",
                   style: new TextStyle(
                     fontSize: 20.0,
-                    color: Color(AppColors.buttonTextColor),
+                    color: AppColors.white,
                   ),
                 ),
-                color: Color(AppColors.buttonColor),
+                color: AppColors.foreground,
                 onPressed: () {
                   print("afficher");
                   String result = "";

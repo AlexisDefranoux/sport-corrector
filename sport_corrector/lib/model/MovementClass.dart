@@ -1,4 +1,4 @@
-import 'package:sport_corrector/model/captor_class.dart';
+import 'package:sport_corrector/model/CaptorClass.dart';
 
 class Movement {
 
