@@ -16,31 +16,31 @@ class _GridExercisesState extends State<GridExercises> {
 
     return
       Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: ListView.separated(
-          padding: const EdgeInsets.only(top: 5.0, bottom: 0, right: 0.0, left: 0.0),
-          itemCount: entries.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              height: 100,
-              child: new RaisedButton(
-                color: Colors.red[colorCodes[index]],
-                elevation: 0,
-                child: new Text('${entries[index]}',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Anton-Regular",
-                    fontSize: 30.0,
+          padding: const EdgeInsets.all(20.0),
+          child: ListView.separated(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 0, right: 0.0, left: 0.0),
+            itemCount: entries.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 100,
+                child: new RaisedButton(
+                  color: Colors.red[colorCodes[index]],
+                  elevation: 0,
+                  child: new Text('${entries[index]}',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Anton-Regular",
+                      fontSize: 30.0,
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ExerciseMenu()));
-                }
-              )
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ExerciseMenu()));
+                  }
+                )
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
         )
-      );
+    );
   }
 }

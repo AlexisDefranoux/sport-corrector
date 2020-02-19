@@ -119,7 +119,7 @@ class _ExerciseState extends State<Exercise>
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    color: Colors.pink,
+                    color: Colors.black87,
                     height:
                     controller.value * MediaQuery.of(context).size.height,
                   ),
