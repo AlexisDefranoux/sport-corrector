@@ -62,23 +62,37 @@ class _TrainingState extends State<Training> {
         ?.toList();
 
     return Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Accelerometer (with gravity): $accelerometer'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Accelerometer (without gravity): $userAccelerometer'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Gyroscope: $gyroscope'),
-            ),
-          ],
-        ));
+        body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Le squat correspond à une flexion des jambes comme sur le petit dessin ci-dessous :',
+                    style: new TextStyle(
+                        fontSize: 15
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+                Image(
+                  image: AssetImage("assets/Image/Squat.png"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "Le mouvement est simple, vous descendez les bras tendus en ayant le dos bien droit ( ni courbé , ni cambré ) jusqu'à avoir les cuisses parallèles au sol et les talons toujours posés au sol . Lors de la descente , vous inspirez puis vous expirez lors de la remontée.",
+                    style: new TextStyle(
+                      fontSize: 15,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              ],
+            )
+        )
+    );
   }
 }
