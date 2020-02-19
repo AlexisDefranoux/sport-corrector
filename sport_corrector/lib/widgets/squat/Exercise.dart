@@ -8,20 +8,22 @@ import 'package:sklite/ensemble/forest.dart';
 import 'package:sklite/utils/io.dart';
 import 'package:sport_corrector/model/CaptorClass.dart';
 import 'package:sport_corrector/model/MovementClass.dart';
+import 'package:sport_corrector/utils/CustomTimerPainter.dart';
 
-import '../../data/AppColors.dart';
+import 'package:sport_corrector/data/AppColors.dart';
 
 class Exercise extends StatefulWidget {
   @override
   _ExerciseState createState() => _ExerciseState();
 }
 
-class _ExerciseState extends State<Exercise> {
+class _ExerciseState extends State<Exercise>
+    with TickerProviderStateMixin {
   List<double> _accelerometerValues;
   List<double> _userAccelerometerValues;
   List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
-      <StreamSubscription<dynamic>>[];
+  <StreamSubscription<dynamic>>[];
   List<Movement> movements = new List<Movement>();
   Timer timer;
   SVC svc;
@@ -31,10 +33,17 @@ class _ExerciseState extends State<Exercise> {
   String dropdownValue = '0-bon';
   int mlClass = 0;
   List<String> items = <String>['0-bon', '1-low speed', '2-high speed', '3-low amplitude', '4-high amplitude', '5-on the side', '6-immobile', '7-horizontal', '8-shake', '9-garbage'];
+  AnimationController controller;
 
   @override
   void initState() {
     super.initState();
+
+    //Controller
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
 
     //Accelerometer events
     _streamSubscriptions
@@ -90,10 +99,11 @@ class _ExerciseState extends State<Exercise> {
           _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList(),
           _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))?.toList(),
           _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList()
-          ), mlClass);
+      ), mlClass);
       print(t.tick);
       if(t.tick >= 20){
         timer?.cancel();
+        predict();
       }
     });
   }
@@ -101,99 +111,91 @@ class _ExerciseState extends State<Exercise> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-        new Container(
-            padding: EdgeInsets.only(bottom: 15.0),
-            width: 200,
-            height: 65,
-            child: DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: TextStyle(
-                      color: Colors.blue
-                  ),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.blue,
-                  ),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      mlClass = int.parse(newValue.split("-")[0]);
-                      dropdownValue = newValue;
-                    });
-                  },
-                  items: items
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-            ),
-            new Container(
-                padding: EdgeInsets.only(bottom: 15.0),
-                width: 200,
-                height: 65,
-                child: new RaisedButton(
-                  elevation: 0,
-                  child: new Text(
-                    "Lancer",
-                    style: new TextStyle(
-                        fontSize: 20.0,
-                        color: AppColors.white),
-                  ),
-                  color: AppColors.foreground,
-                  onPressed: () {
-                    print("lancer");
-                    oneMovement();
-                  },
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                )),
-            new Container(
-              padding: EdgeInsets.only(bottom: 15.0),
-              width: 200,
-              height: 65,
-              child: new RaisedButton(
-                elevation: 0,
-                child: new Text(
-                  "Afficher",
-                  style: new TextStyle(
-                    fontSize: 20.0,
-                    color: AppColors.white,
+      body: AnimatedBuilder(
+          animation: controller,
+          builder: (context, child) {
+            return Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.pink,
+                    height:
+                    controller.value * MediaQuery.of(context).size.height,
                   ),
                 ),
-                color: AppColors.foreground,
-                onPressed: () {
-                  print("afficher");
-                  String result = "";
-                  for(Movement movement in movements){
-                    result += movement.toString() + "\n";
-                  }
-                  print(result);
-                  predict();
-                },
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Résultat SVC : ' + items[resultSvc]),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Résultat RFC : ' + items[resultRfc]),
-            ),
-          ],
-        ),
-      ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Align(
+                          alignment: FractionalOffset.center,
+                          child: AspectRatio(
+                            aspectRatio: 1.0,
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: CustomPaint(
+                                      painter: CustomTimerPainter(
+                                        animation: controller,
+                                        backgroundColor: Colors.white,
+                                        color: Theme.of(context).indicatorColor,
+                                      )),
+                                ),
+                                Align(
+                                  alignment: FractionalOffset.center,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('Résultat SVC : ' + items[resultSvc]),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('Résultat RFC : ' + items[resultRfc]),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      AnimatedBuilder(
+                          animation: controller,
+                          builder: (context, child) {
+                            return FloatingActionButton.extended(
+                                onPressed: () {
+                                  if (controller.isAnimating)
+                                    controller.stop();
+                                  else {
+                                    oneMovement();
+                                    print("lancer");
+                                    controller.reverse(
+                                        from: controller.value == 0.0
+                                            ? 1.0
+                                            : controller.value);
+                                  }
+                                },
+                                icon: Icon(controller.isAnimating
+                                    ? Icons.pause
+                                    : Icons.play_arrow),
+                                label: Text(
+                                    controller.isAnimating ? "Pause" : "Play"));
+                          }),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }),
     );
   }
 }

@@ -9,7 +9,8 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sport Corrector',
-      home: new HomePage()
+      theme: new ThemeData(primarySwatch: Colors.teal),
+      home: new HomePage(),
     );
   }
 }

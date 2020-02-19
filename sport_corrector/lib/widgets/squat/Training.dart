@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 
-class SensorsExample extends StatefulWidget {
+class Training extends StatefulWidget {
   @override
-  _SensorsExampleState createState() => _SensorsExampleState();
+  _TrainingState createState() => _TrainingState();
 }
 
-class _SensorsExampleState extends State<SensorsExample> {
+class _TrainingState extends State<Training> {
   List<double> _accelerometerValues;
   List<double> _userAccelerometerValues;
   List<double> _gyroscopeValues;

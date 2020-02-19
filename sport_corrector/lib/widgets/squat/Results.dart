@@ -3,19 +3,19 @@ import 'package:sklite/SVM/SVM.dart';
 import 'package:sklite/utils/io.dart';
 import 'dart:convert';
 
-class HomePage extends StatefulWidget {
+class Results extends StatefulWidget {
   @override
-  _HomePageState createState() {
-    return new _HomePageState();
+  _ResultsState createState() {
+    return new _ResultsState();
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _ResultsState extends State<Results> {
   SVC svc;
   String result_1 = "";
   String result_2 = "";
 
-  _HomePageState() {
+  _ResultsState() {
     loadModel("assets/MachineLearning/data_svc.json").then((x) {
       this.svc = SVC.fromMap(json.decode(x));
 
