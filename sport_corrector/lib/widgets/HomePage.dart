@@ -24,7 +24,6 @@ class _ButtonMenuState extends State<HomePage> {
                   Icons.accessibility_new,
                   color: Colors.redAccent,
                   size: 40.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
                 ),
                 Icon(
                   Icons.rowing,

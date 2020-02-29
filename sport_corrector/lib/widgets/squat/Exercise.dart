@@ -10,8 +10,6 @@ import 'package:sport_corrector/model/CaptorClass.dart';
 import 'package:sport_corrector/model/MovementClass.dart';
 import 'package:sport_corrector/utils/CustomTimerPainter.dart';
 
-import 'package:sport_corrector/data/AppColors.dart';
-
 class Exercise extends StatefulWidget {
   @override
   _ExerciseState createState() => _ExerciseState();
@@ -119,7 +117,7 @@ class _ExerciseState extends State<Exercise>
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    color: Colors.black87,
+                    color: Colors.black12,
                     height:
                     controller.value * MediaQuery.of(context).size.height,
                   ),

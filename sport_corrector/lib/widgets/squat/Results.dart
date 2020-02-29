@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sklite/SVM/SVM.dart';
-import 'package:sklite/utils/io.dart';
-import 'dart:convert';
+
 
 class Results extends StatefulWidget {
   @override
@@ -11,36 +9,43 @@ class Results extends StatefulWidget {
 }
 
 class _ResultsState extends State<Results> {
-  SVC svc;
-  String result_1 = "";
-  String result_2 = "";
 
-  _ResultsState() {
-    loadModel("assets/MachineLearning/data_svc.json").then((x) {
-      this.svc = SVC.fromMap(json.decode(x));
-
-      result_1 = this.svc.predict([-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2,-0.9,1.9,9.1,-0.3,-0.1,-0.1,-0.3,-0.6,-0.2]).toString();
-      result_2 = this.svc.predict([0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3,0.5,2.9,8.7,0.1,0.3,-0.0,-0.5,0.3,-0.3]).toString();
-      print("MARCHE PAS");
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('should be 1 : ' + result_1),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('should be 2 : ' + result_2),
-            ),
-          ],
-        ));
+        body: _myListView(context)
+    );
+  }
+
+  Widget _myListView(BuildContext context) {
+
+    final results = [1, 2, 3, 6];
+
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(
+            Icons.warning,
+            size: 40.0,
+          ),
+          title: Text('Sun'),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.check,
+            size: 40.0,
+          ),
+          title: Text('Moon'),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.warning,
+            size: 40.0,
+          ),
+          title: Text('Star'),
+        ),
+      ],
+    );
   }
 }
