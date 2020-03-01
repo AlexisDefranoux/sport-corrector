@@ -9,10 +9,14 @@ import 'package:sklite/utils/io.dart';
 import 'package:sport_corrector/model/CaptorClass.dart';
 import 'package:sport_corrector/model/MovementClass.dart';
 import 'package:sport_corrector/utils/CustomTimerPainter.dart';
+import 'package:sport_corrector/utils/ResultConversion.dart';
 
 class Exercise extends StatefulWidget {
+  final List<int> results;
+  Exercise(this.results);
+
   @override
-  _ExerciseState createState() => _ExerciseState();
+  _ExerciseState createState() => _ExerciseState(results);
 }
 
 class _ExerciseState extends State<Exercise>
@@ -35,6 +39,9 @@ class _ExerciseState extends State<Exercise>
   List<int> savedRfc = <int>[];
   List<int> savedSvc = <int>[];
   bool pause = false;
+
+  List<int> results;
+  _ExerciseState(this.results);
 
   @override
   void initState() {
@@ -76,6 +83,7 @@ class _ExerciseState extends State<Exercise>
       resultRfc = this.rfc.predict(movements[movements.length - 1].getList());
       print("RFC : " + items[resultRfc]);
       savedRfc.add(resultRfc);
+      results.add(resultRfc);
     });
     loadModel("assets/MachineLearning/data_svc.json").then((x) {
       this.svc = SVC.fromMap(json.decode(x));
@@ -95,8 +103,10 @@ class _ExerciseState extends State<Exercise>
   }
 
   void allMovement() {
+    results.clear();
     savedRfc = [];
     savedSvc = [];
+    pause = false;
 
     int nbTickStep = 21;
 

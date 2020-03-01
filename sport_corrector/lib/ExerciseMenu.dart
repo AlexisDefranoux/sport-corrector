@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_corrector/utils/ResultConversion.dart';
 import 'package:sport_corrector/widgets/squat/Training.dart';
 import 'package:sport_corrector/data/AppColors.dart';
 import 'package:sport_corrector/widgets/squat/Exercise.dart';
@@ -12,7 +13,10 @@ class ExerciseMenu extends StatefulWidget {
 }
 
 class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMixin{
+
   TabController _tabController;
+  List<int> results = new List<int>();
+
   @override
   void initState() {
     super.initState();
@@ -41,8 +45,8 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
   List<Widget> _just() {
     return [
       Training(),
-      Exercise(),
-      Results(),
+      Exercise(results),
+      Results(results),
       Dev()
     ];
   }

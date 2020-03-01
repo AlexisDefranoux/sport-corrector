@@ -3,15 +3,19 @@ import 'package:sport_corrector/utils/ResultConversion.dart';
 
 
 class Results extends StatefulWidget {
+  final List<int> results;
+  Results(this.results);
+
   @override
   _ResultsState createState() {
-    return new _ResultsState();
+    return new _ResultsState(results);
   }
 }
 
 class _ResultsState extends State<Results> {
 
-  final results = [1, 2, 3, 6];
+  List<int> results;
+  _ResultsState(this.results);
 
   @override
   Widget build(BuildContext context) {
