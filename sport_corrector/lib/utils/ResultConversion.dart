@@ -1,20 +1,21 @@
+import 'package:flutter/material.dart';
+
 class ResultConversion {
 
-  static String convert(int result) {
+  static convert(int result) {
     switch(result){
       case 0 :
-        return 'Correct motion';
+        return [Icons.warning, 'Correct motion'];
         break;
       case 1 :
-        return 'Correct motion';
+        return [Icons.check, 'Correct motion'];
         break;
       case 2 :
-        return 'Correct motion';
+        return [Icons.check, 'Correct motion'];
         break;
       default :
-        return 'Unknow';
+        return [Icons.flag, 'Unknown'];
         break;
     }
   }
-
 }

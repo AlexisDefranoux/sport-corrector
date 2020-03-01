@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_corrector/utils/ResultConversion.dart';
 
 
 class Results extends StatefulWidget {
@@ -10,6 +11,7 @@ class Results extends StatefulWidget {
 
 class _ResultsState extends State<Results> {
 
+  final results = [1, 2, 3, 6];
 
   @override
   Widget build(BuildContext context) {
@@ -19,33 +21,27 @@ class _ResultsState extends State<Results> {
   }
 
   Widget _myListView(BuildContext context) {
-
-    final results = [1, 2, 3, 6];
-
     return ListView(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(
-            Icons.warning,
-            size: 40.0,
-          ),
-          title: Text('Sun'),
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.check,
-            size: 40.0,
-          ),
-          title: Text('Moon'),
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.warning,
-            size: 40.0,
-          ),
-          title: Text('Star'),
-        ),
-      ],
+      children: getList()
     );
+  }
+
+  List<Widget> getList(){
+    List<Widget> items = new List<Widget>();
+    var my;
+    int nbr = 1;
+    results.forEach((v) {
+      my = ResultConversion.convert(v);
+      items.add(ListTile(
+          leading: Icon(
+            my[0],
+            size: 40.0,
+          ),
+          title: Text('Squat ' + nbr.toString() + ' : ' + my[1]),
+        )
+      );
+      nbr++;
+    });
+    return items;
   }
 }
