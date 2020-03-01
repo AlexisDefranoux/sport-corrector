@@ -28,7 +28,7 @@ class _ExerciseState extends State<Exercise>
   RandomForestClassifier rfc;
   int resultRfc = 0;
   int resultSvc = 0;
-  String dropdownValue = '0-bon';
+  int dropdownValue = 3;
   int mlClass = 0;
   List<String> items = <String>['0-bon', '1-low speed', '2-high speed', '3-low amplitude', '4-high amplitude', '5-on the side', '6-immobile', '7-horizontal', '8-shake', '9-garbage'];
   AnimationController controller;
@@ -95,13 +95,17 @@ class _ExerciseState extends State<Exercise>
   }
 
   void allMovement() {
+    savedRfc = [];
+    savedSvc = [];
+
+    int nbTickStep = 21;
+
     controller.reverse(
         from: controller.value == 0.0
             ? 1.0
             : controller.value);
 
     Movement movement = new Movement();
-    movements.add(movement);
     timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
       if (!pause) {
         movement.addCaptor(new Captor(
@@ -114,18 +118,19 @@ class _ExerciseState extends State<Exercise>
         ), mlClass);
       }
       print(t.tick);
-      if (t.tick % 25 == 0) {
+      if (t.tick % nbTickStep == 0) {
         if (!pause) {
+          movements.add(movement);
           predict();
+          movement = new Movement();
         }
-        pause = !pause;
-
         controller.reverse(
             from: controller.value == 0.0
                 ? 1.0
                 : controller.value);
+        pause = !pause;
       }
-      if (t.tick >= 125) {
+      if (t.tick >= nbTickStep * (2*dropdownValue - 1)) {
         timer?.cancel();
       }
     });
@@ -183,6 +188,31 @@ class _ExerciseState extends State<Exercise>
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text('Résultat RFC : ' + items[resultRfc]),
                                       ),
+                                      DropdownButton<int>(
+                                        value: dropdownValue,
+                                        icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        elevation: 16,
+                                        style: TextStyle(
+                                            color: Colors.blue
+                                        ),
+                                        underline: Container(
+                                          height: 2,
+                                          color: Colors.blue,
+                                        ),
+                                        onChanged: (int newValue) {
+                                          setState(() {
+                                            dropdownValue = newValue;
+                                          });
+                                        },
+                                        items: [1,2,3,4,5]
+                                            .map<DropdownMenuItem<int>>((int value) {
+                                          return DropdownMenuItem<int>(
+                                            value: value,
+                                            child: Text(value.toString()),
+                                          );
+                                        }).toList(),
+                                      )
                                     ],
                                   ),
                                 ),
