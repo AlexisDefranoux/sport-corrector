@@ -32,6 +32,9 @@ class _ExerciseState extends State<Exercise>
   int mlClass = 0;
   List<String> items = <String>['0-bon', '1-low speed', '2-high speed', '3-low amplitude', '4-high amplitude', '5-on the side', '6-immobile', '7-horizontal', '8-shake', '9-garbage'];
   AnimationController controller;
+  List<int> savedRfc = <int>[];
+  List<int> savedSvc = <int>[];
+  bool pause = false;
 
   @override
   void initState() {
@@ -72,11 +75,13 @@ class _ExerciseState extends State<Exercise>
       this.rfc = RandomForestClassifier.fromMap(json.decode(x));
       resultRfc = this.rfc.predict(movements[movements.length - 1].getList());
       print("RFC : " + items[resultRfc]);
+      savedRfc.add(resultRfc);
     });
     loadModel("assets/MachineLearning/data_svc.json").then((x) {
       this.svc = SVC.fromMap(json.decode(x));
       resultSvc = this.svc.predict(movements[movements.length - 1].getList());
       print("SVC : " + items[resultSvc]);
+      savedSvc.add(resultSvc);
     });
   }
 
@@ -89,19 +94,39 @@ class _ExerciseState extends State<Exercise>
     super.dispose();
   }
 
-  void oneMovement() {
+  void allMovement() {
+    controller.reverse(
+        from: controller.value == 0.0
+            ? 1.0
+            : controller.value);
+
     Movement movement = new Movement();
     movements.add(movement);
     timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
-      movement.addCaptor(new Captor(
-          _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList(),
-          _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))?.toList(),
-          _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList()
-      ), mlClass);
+      if (!pause) {
+        movement.addCaptor(new Captor(
+            _accelerometerValues?.map((double v) => v.toStringAsFixed(1))
+                ?.toList(),
+            _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))
+                ?.toList(),
+            _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))
+                ?.toList()
+        ), mlClass);
+      }
       print(t.tick);
-      if(t.tick >= 20){
+      if (t.tick % 25 == 0) {
+        if (!pause) {
+          predict();
+        }
+        pause = !pause;
+
+        controller.reverse(
+            from: controller.value == 0.0
+                ? 1.0
+                : controller.value);
+      }
+      if (t.tick >= 125) {
         timer?.cancel();
-        predict();
       }
     });
   }
@@ -117,7 +142,7 @@ class _ExerciseState extends State<Exercise>
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    color: Colors.black12,
+                    color: pause ? Colors.yellow : Colors.black87,
                     height:
                     controller.value * MediaQuery.of(context).size.height,
                   ),
@@ -171,16 +196,7 @@ class _ExerciseState extends State<Exercise>
                           builder: (context, child) {
                             return FloatingActionButton.extended(
                                 onPressed: () {
-                                  if (controller.isAnimating)
-                                    controller.stop();
-                                  else {
-                                    oneMovement();
-                                    print("lancer");
-                                    controller.reverse(
-                                        from: controller.value == 0.0
-                                            ? 1.0
-                                            : controller.value);
-                                  }
+                                  allMovement();
                                 },
                                 icon: Icon(controller.isAnimating
                                     ? Icons.pause
