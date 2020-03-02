@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sensors/sensors.dart';
 import 'package:sklite/SVM/SVM.dart';
 import 'package:sklite/ensemble/forest.dart';
@@ -138,9 +137,8 @@ class _ExerciseState extends State<Exercise>
           predict();
           movement = new Movement();
           playStartMusic();
-          //SystemSound.play(SystemSoundType.click);
         }else{
-          //playEndMusic();
+          playEndMusic();
         }
         controller.reverse(
             from: controller.value == 0.0
@@ -154,9 +152,16 @@ class _ExerciseState extends State<Exercise>
     });
   }
 
-  playStartMusic() async {
-    await audioPlayer.play("assets/Song/start.mp3", isLocal: true);
+  Future<void> playStartMusic() async {
+    await audioPlayer.play('assets/Song/start.mp3');
+    //setState(() => playerState = PlayerState.playing);
   }
+
+  Future<void> playEndMusic() async {
+    await audioPlayer.play('assets/Song/end.mp3');
+    //setState(() => playerState = PlayerState.playing);
+  }
+
 
   @override
   Widget build(BuildContext context) {
