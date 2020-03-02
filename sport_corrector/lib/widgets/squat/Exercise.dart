@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:audioplayer/audioplayer.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
@@ -44,7 +44,7 @@ class _ExerciseState extends State<Exercise>
 
   List<int> results;
   _ExerciseState(this.results);
-  AudioPlayer audioPlayer = new AudioPlayer();
+  final assetsAudioPlayer = AssetsAudioPlayer();
 
   @override
   void initState() {
@@ -109,9 +109,9 @@ class _ExerciseState extends State<Exercise>
     results.clear();
     savedRfc = [];
     savedSvc = [];
-    pause = false;
+    pause = true;
 
-    int nbTickStep = 21;
+    int nbTickStep = 22;
 
     controller.reverse(
         from: controller.value == 0.0
@@ -136,9 +136,9 @@ class _ExerciseState extends State<Exercise>
           movements.add(movement);
           predict();
           movement = new Movement();
-          playStartMusic();
-        }else{
           playEndMusic();
+        }else{
+          playStartMusic();
         }
         controller.reverse(
             from: controller.value == 0.0
@@ -146,20 +146,22 @@ class _ExerciseState extends State<Exercise>
                 : controller.value);
         pause = !pause;
       }
-      if (t.tick >= nbTickStep * (2*dropdownValue - 1)) {
+      if (t.tick >= nbTickStep * (2*dropdownValue)) {
         timer?.cancel();
       }
     });
   }
 
   Future<void> playStartMusic() async {
-    await audioPlayer.play('assets/Song/start.mp3');
-    //setState(() => playerState = PlayerState.playing);
+    assetsAudioPlayer.open(
+      "assets/Song/start.mp3",
+    );
   }
 
   Future<void> playEndMusic() async {
-    await audioPlayer.play('assets/Song/end.mp3');
-    //setState(() => playerState = PlayerState.playing);
+    assetsAudioPlayer.open(
+      "assets/Song/end.mp3",
+    );
   }
 
 

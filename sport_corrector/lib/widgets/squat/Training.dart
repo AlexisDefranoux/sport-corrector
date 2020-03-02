@@ -90,6 +90,28 @@ class _TrainingState extends State<Training> {
                     textAlign: TextAlign.justify,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "Rouge = mouvement",
+                    style: new TextStyle(
+                      color: Colors.red,//black26
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "Gris = pause",
+                    style: new TextStyle(
+                      color: Colors.black26,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
               ],
             )
         )

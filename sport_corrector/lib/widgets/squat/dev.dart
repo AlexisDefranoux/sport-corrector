@@ -92,7 +92,7 @@ class _DevState extends State<Dev> {
           _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList()
           ), mlClass);
       print(t.tick);
-      if(t.tick >= 20){
+      if(t.tick >= 22){
         timer?.cancel();
       }
     });
