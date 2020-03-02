@@ -190,13 +190,17 @@ class _ExerciseState extends State<Exercise>
                                     crossAxisAlignment:
                                     CrossAxisAlignment.center,
                                     children: <Widget>[
+//                                      Padding(
+//                                        padding: const EdgeInsets.all(8.0),
+//                                        child: Text('Résultat SVC : ' + items[resultSvc]),
+//                                      ),
+//                                      Padding(
+//                                        padding: const EdgeInsets.all(8.0),
+//                                        child: Text('Résultat RFC : ' + items[resultRfc]),
+//                                      ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text('Résultat SVC : ' + items[resultSvc]),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text('Résultat RFC : ' + items[resultRfc]),
+                                        child: Text(ResultConversion.convert(resultSvc)[1]),
                                       ),
                                       DropdownButton<int>(
                                         value: dropdownValue,
