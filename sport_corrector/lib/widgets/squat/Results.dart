@@ -43,7 +43,7 @@ class _ResultsState extends State<Results> {
             my[0],
             size: 40.0,
           ),
-          title: Text('Squat ' + nbr.toString() + ' : ' + my[1]),
+          title: Text('RFC Squat ' + nbr.toString() + ' : ' + my[1]),
         )
       );
       nbr++;
@@ -57,7 +57,7 @@ class _ResultsState extends State<Results> {
           my[0],
           size: 40.0,
         ),
-        title: Text('Squat ' + nbr.toString() + ' : ' + my[1]),
+        title: Text('SVC Squat ' + nbr.toString() + ' : ' + my[1]),
       )
       );
       nbr++;
