@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:audioplayer/audioplayer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 import 'package:sklite/SVM/SVM.dart';
@@ -30,8 +32,8 @@ class _ExerciseState extends State<Exercise>
   Timer timer;
   SVC svc;
   RandomForestClassifier rfc;
-  int resultRfc = 0;
-  int resultSvc = 0;
+  int resultRfc = 10;
+  int resultSvc = 10;
   int dropdownValue = 3;
   int mlClass = 0;
   List<String> items = <String>['0-bon', '1-low speed', '2-high speed', '3-low amplitude', '4-high amplitude', '5-on the side', '6-immobile', '7-horizontal', '8-shake', '9-garbage'];
@@ -42,6 +44,7 @@ class _ExerciseState extends State<Exercise>
 
   List<int> results;
   _ExerciseState(this.results);
+  AudioPlayer audioPlayer = new AudioPlayer();
 
   @override
   void initState() {
@@ -133,6 +136,9 @@ class _ExerciseState extends State<Exercise>
           movements.add(movement);
           predict();
           movement = new Movement();
+          playStartMusic();
+        }else{
+          playEndMusic();
         }
         controller.reverse(
             from: controller.value == 0.0
@@ -146,6 +152,17 @@ class _ExerciseState extends State<Exercise>
     });
   }
 
+  Future<void> playStartMusic() async {
+    await audioPlayer.play('assets/Song/start.mp3');
+    //setState(() => playerState = PlayerState.playing);
+  }
+
+  Future<void> playEndMusic() async {
+    await audioPlayer.play('assets/Song/end.mp3');
+    //setState(() => playerState = PlayerState.playing);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,7 +174,7 @@ class _ExerciseState extends State<Exercise>
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    color: pause ? Colors.yellow : Colors.black87,
+                    color: pause ? Colors.black26 : Colors.red,
                     height:
                     controller.value * MediaQuery.of(context).size.height,
                   ),
@@ -190,43 +207,47 @@ class _ExerciseState extends State<Exercise>
                                     crossAxisAlignment:
                                     CrossAxisAlignment.center,
                                     children: <Widget>[
-//                                      Padding(
-//                                        padding: const EdgeInsets.all(8.0),
-//                                        child: Text('Résultat SVC : ' + items[resultSvc]),
-//                                      ),
-//                                      Padding(
-//                                        padding: const EdgeInsets.all(8.0),
-//                                        child: Text('Résultat RFC : ' + items[resultRfc]),
-//                                      ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(ResultConversion.convert(resultSvc)[1]),
+                                        child: resultSvc == 10 ? Text('') : Text('SVC result : ' + ResultConversion.convert(resultSvc)[1]),
                                       ),
-                                      DropdownButton<int>(
-                                        value: dropdownValue,
-                                        icon: Icon(Icons.arrow_downward),
-                                        iconSize: 24,
-                                        elevation: 16,
-                                        style: TextStyle(
-                                            color: Colors.blue
-                                        ),
-                                        underline: Container(
-                                          height: 2,
-                                          color: Colors.blue,
-                                        ),
-                                        onChanged: (int newValue) {
-                                          setState(() {
-                                            dropdownValue = newValue;
-                                          });
-                                        },
-                                        items: [1,2,3,4,5]
-                                            .map<DropdownMenuItem<int>>((int value) {
-                                          return DropdownMenuItem<int>(
-                                            value: value,
-                                            child: Text(value.toString()),
-                                          );
-                                        }).toList(),
-                                      )
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: resultRfc == 10 ? Text('') : Text('RFC result : ' + ResultConversion.convert(resultRfc)[1]),
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 150),
+                                            child: Text('Repetition : '),
+                                          ),
+                                          DropdownButton<int>(
+                                            value: dropdownValue,
+                                            icon: Icon(Icons.arrow_downward),
+                                            iconSize: 24,
+                                            elevation: 16,
+                                            style: TextStyle(
+                                                color: Colors.blue
+                                            ),
+                                            underline: Container(
+                                              height: 2,
+                                              color: Colors.blue,
+                                            ),
+                                            onChanged: (int newValue) {
+                                              setState(() {
+                                                dropdownValue = newValue;
+                                              });
+                                            },
+                                            items: [1,2,3,4,5]
+                                                .map<DropdownMenuItem<int>>((int value) {
+                                              return DropdownMenuItem<int>(
+                                                value: value,
+                                                child: Text(value.toString()),
+                                              );
+                                            }).toList(),
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
