@@ -16,7 +16,7 @@ class ResultConversion {
       case 3 :
         return [Icons.warning, 'Low amplitude'];
         break;
-      case 5 :
+      case 4 :
         return [Icons.warning, 'High amplitude'];
         break;
       default :
