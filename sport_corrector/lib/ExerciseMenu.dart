@@ -16,6 +16,7 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
 
   TabController _tabController;
   List<int> results = new List<int>();
+  List<int> results2 = new List<int>();
 
   @override
   void initState() {
@@ -45,8 +46,8 @@ class _ExerciseMenuState extends State<ExerciseMenu> with TickerProviderStateMix
   List<Widget> _just() {
     return [
       Training(),
-      Exercise(results),
-      Results(results),
+      Exercise(results, results2),
+      Results(results, results2),
       Dev()
     ];
   }

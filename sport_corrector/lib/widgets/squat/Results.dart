@@ -4,18 +4,20 @@ import 'package:sport_corrector/utils/ResultConversion.dart';
 
 class Results extends StatefulWidget {
   final List<int> results;
-  Results(this.results);
+  final List<int> results2;
+  Results(this.results, this.results2);
 
   @override
   _ResultsState createState() {
-    return new _ResultsState(results);
+    return new _ResultsState(results, results2);
   }
 }
 
 class _ResultsState extends State<Results> {
 
   List<int> results;
-  _ResultsState(this.results);
+  List<int> results2;
+  _ResultsState(this.results, this.results2);
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,20 @@ class _ResultsState extends State<Results> {
           ),
           title: Text('Squat ' + nbr.toString() + ' : ' + my[1]),
         )
+      );
+      nbr++;
+    });
+
+    nbr = 1;
+    results2.forEach((v) {
+      my = ResultConversion.convert(v);
+      items.add(ListTile(
+        leading: Icon(
+          my[0],
+          size: 40.0,
+        ),
+        title: Text('Squat ' + nbr.toString() + ' : ' + my[1]),
+      )
       );
       nbr++;
     });

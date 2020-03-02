@@ -15,10 +15,11 @@ import 'package:sport_corrector/utils/ResultConversion.dart';
 
 class Exercise extends StatefulWidget {
   final List<int> results;
-  Exercise(this.results);
+  final List<int> results2;
+  Exercise(this.results, this.results2);
 
   @override
-  _ExerciseState createState() => _ExerciseState(results);
+  _ExerciseState createState() => _ExerciseState(results, results2);
 }
 
 class _ExerciseState extends State<Exercise>
@@ -43,7 +44,8 @@ class _ExerciseState extends State<Exercise>
   bool pause = false;
 
   List<int> results;
-  _ExerciseState(this.results);
+  List<int> results2;
+  _ExerciseState(this.results, this.results2);
   final assetsAudioPlayer = AssetsAudioPlayer();
 
   @override
@@ -93,6 +95,7 @@ class _ExerciseState extends State<Exercise>
       resultSvc = this.svc.predict(movements[movements.length - 1].getList());
       print("SVC : " + items[resultSvc]);
       savedSvc.add(resultSvc);
+      results2.add(resultSvc);
     });
   }
 
@@ -107,6 +110,7 @@ class _ExerciseState extends State<Exercise>
 
   void allMovement() {
     results.clear();
+    results2.clear();
     savedRfc = [];
     savedSvc = [];
     pause = true;
