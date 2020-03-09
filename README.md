@@ -10,11 +10,13 @@ Il n'y pas de serveur à déployer. L'application mobile est indépendante d'int
 
 #### 2. Application
 
-Le projet nécessite Flutter SDK > 1.12.0 : [Docs flutter](https://flutter.dev/docs/get-started/install)
+Le projet nécessite Flutter SDK >= 1.12.0 : [Docs flutter](https://flutter.dev/docs/get-started/install)
 
 a. Clonez le projet Git
+
 b. Ouvrez le projet via [Android Studio](https://developer.android.com/studio)
-c. Lancez le build et l'installation.
+
+c. Lancez le build et l'installation sur un émulateur ou téléphone (iOS/Android)
 
 ## Pages wiki
 
